@@ -1,0 +1,188 @@
+﻿<Window x:Class="UnitConverterWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UnitConverterWpf"
+        xmlns:converter="clr-namespace:UnitConverterWpf.Converters"         
+        mc:Ignorable="d"
+        Title="Imperial To SI Unit Converter" Height="380" Width="850">
+    <Window.Resources>
+        <converter:FahrenheitToCelsiusConverter x:Key="FahrenheitToCelsiusConverter"/>
+        <converter:FootToMeterConverter x:Key="FootToMeterConverter"/>
+        <converter:MileToKilometerConverter x:Key="MileToKilometerConverter"/>
+        <converter:PoundToKilogramConverter x:Key="PoundToKilogramConverter"/>
+        <converter:OunceToGramConverter x:Key="OunceToGramConverter"/>
+        <converter:FluidOunceToLiterConverter x:Key="FluidOunceToLiterConverter"/>
+        <converter:YardToMeterConverter x:Key="YardToMeterConverter"/>
+        <converter:GallonToLiterConverter x:Key="GallonToLiterConverter"/>
+
+        <Style TargetType="TextBlock" x:Key="ConversionTitleStyle">
+            <Setter Property="FontSize" Value="17"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="20">
+            <TextBlock Text="Fahrenheit and Celsius" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="&#186;F "/>
+                <TextBox x:Name="TBFahrenheit"  MaxLength="20" Width="120"
+                    Text="{Binding TBCelsius, Converter={StaticResource FahrenheitToCelsiusConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="&#186;C "/>
+                <TextBox x:Name="TBCelsius" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBFahrenheit, Path=Text,
+            Converter={StaticResource FahrenheitToCelsiusConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="20" Grid.RowSpan="2">
+            <TextBlock Text="Feet, inches and meters" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Ft"/>
+                <TextBox x:Name="TBFoot"  MaxLength="20" Width="120"
+                    Text="{Binding TBMeter, Converter={StaticResource FootToMeterConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="In"/>
+                <TextBox x:Name="TBInch"  MaxLength="20" Width="120"/>
+            </StackPanel>
+
+            <Button Width="140" Height="30" Margin="0 0 0 10"  FontSize="15"
+                     Click="Button_Click">Add inches to feet</Button>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="M"/>
+                <TextBox x:Name="TBMeter" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBFoot, Path=Text,
+            Converter={StaticResource FootToMeterConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="2" Grid.Row="0" Margin="20">
+            <TextBlock Text="Yards and meters" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Yd"/>
+                <TextBox x:Name="TBYard"  MaxLength="20" Width="120"
+                    Text="{Binding TBMeter_yd, Converter={StaticResource YardToMeterConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="M"/>
+                <TextBox x:Name="TBMeter_yd" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBYard, Path=Text,
+            Converter={StaticResource YardToMeterConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="3" Grid.Row="0" Margin="20">
+            <TextBlock Text="Miles and kilometers" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Mi"/>
+                <TextBox x:Name="TBMile"  MaxLength="20" Width="120"
+                    Text="{Binding TBKilometer, Converter={StaticResource MileToKilometerConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Km"/>
+                <TextBox x:Name="TBKilometer" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBMile, Path=Text,
+            Converter={StaticResource  MileToKilometerConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="20">
+            <TextBlock Text="Pounds and kilograms" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Lb"/>
+                <TextBox x:Name="TBPound"  MaxLength="20" Width="120"
+                    Text="{Binding TBKilogram, Converter={StaticResource PoundToKilogramConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Kg"/>
+                <TextBox x:Name="TBKilogram" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBPound, Path=Text,
+            Converter={StaticResource PoundToKilogramConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20">
+            <TextBlock Text="Ounces and grams" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Oz"/>
+                <TextBox x:Name="TBOunce"  MaxLength="20" Width="120"
+                    Text="{Binding TBGram, Converter={StaticResource OunceToGramConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="G"/>
+                <TextBox x:Name="TBGram" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBOunce, Path=Text,
+            Converter={StaticResource OunceToGramConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="20">
+            <TextBlock Text="Fluid ounces and liters" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Fl oz"/>
+                <TextBox x:Name="TBOunce_fl"  MaxLength="20" Width="120"
+                    Text="{Binding TBLiter_oz, Converter={StaticResource FluidOunceToLiterConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="L"/>
+                <TextBox x:Name="TBLiter_oz" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBOunce_fl, Path=Text,
+            Converter={StaticResource FluidOunceToLiterConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Grid.Row="1" Margin="20">
+            <TextBlock Text="Gallons and liters" Margin="0 0 0 10" Style="{StaticResource ConversionTitleStyle}"/>
+
+            <StackPanel Orientation ="Horizontal" Margin="0 0 0 10">
+                <Label Content="Gal"/>
+                <TextBox x:Name="TBGallon"  MaxLength="20" Width="120"
+                    Text="{Binding TBLiter_gal, Converter={StaticResource GallonToLiterConverter}, StringFormat=N3}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="L"/>
+                <TextBox x:Name="TBLitter_gal" MaxLength="20" Width="120"
+                    Text="{Binding ElementName=TBGallon, Path=Text,
+            Converter={StaticResource GallonToLiterConverter}, StringFormat=N3}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
